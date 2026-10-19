@@ -96,15 +96,43 @@ quantidadeLivros banco pessoa =
             then 1 + quantidadeLivros (tail banco) pessoa Se sim Retorna 1 + chama a funcao para o resto da lista 
             else quantidadeLivros (tail banco) pessoa
 
-emprestar :: BancodeDados -> Pessoa -> Livro -> Data -> Data -> BancodeDados
+existeLivro :: Catalogo -> Livro -> Bool
+existeLivro acervo livro =
+    if null acervo
+        then False
+        else if fst (head acervo) == livro
+            then True
+            else existeLivro (tail acervo) livro
+
+
+emprestar :: BancodeDados -> Pessoa -> Livro -> Data -> Data -> BancodeDados -- 4 parametros e reotnra um novo BD 
 emprestar banco pessoa livro retirada prazo =
-    if quantidadeLivros banco pessoa >= limiteLivros
+    if quantidadeLivros banco pessoa >= limiteLivros -- se ultrapassar retorna o banco igual se nao
         then banco
-        else if existeLivro catalogo livro
-            then if retirada > 0 && prazo >= retirada
+        else if existeLivro catalogo livro -- verifica se o livro existe
+            then if retirada > 0 && prazo >= retirada -- 
                 then banco ++ [((pessoa, livro), (retirada, prazo))]
                 else banco
             else banco
+
+Q8
+
+temPalavra :: [PalavraChave] -> PalavraChave -> Bool -- recebe uma lista de palavras e percorre essa lista e vai fericiando se a PAlavraChave Esta dentro da lista 
+temPalavra palavras palavra =
+    if null palavras
+        then False
+        else if head palavras == palavra  
+            then True Se sim retorna true 
+            else temPalavra (tail palavras) palavra retorna Falso 
+
+livrosPorPalavra :: Catalogo -> PalavraChave -> [Livro]
+livrosPorPalavra acervo palavra =
+    if null acervo -- acervo for nul condição de palavra
+        then []
+        else if temPalavra (snd (head acervo)) palavra  -- pega a lista de palavras associadas a cabeça da lista do acervo. e aplica a funcao tem palavra
+            -- se sim eu quero o primeiro elemento da cabeça do acervo e soma com a funcao livros por palavra chamando recursivamente o resto das livras
+            then [fst (head acervo)] ++ livrosPorPalavra (tail acervo) palavra
+            else livrosPorPalavra (tail acervo) palavra
 
 Glossário e Resumo 
 

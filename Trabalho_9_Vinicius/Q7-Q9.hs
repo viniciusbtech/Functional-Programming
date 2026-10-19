@@ -1,6 +1,8 @@
+
 type Pessoa = String
 type Livro = String
 type PalavraChave = String
+
 type Data = Int
 type Emprestimo = ((Pessoa, Livro), (Data, Data))
 type BancodeDados = [Emprestimo]
@@ -12,16 +14,22 @@ limiteLivros = 3
 catalogo :: Catalogo
 catalogo = [("A Mente Nova do Rei", ["ciencia", "mente"]),
             ("O Segredo de Luiza", ["negocios", "empreendedorismo"]),
+            ("Fisica psicologica", ["ciencia", "mente"]),
             ("O Pequeno Principe", ["literatura", "amizade"]),
             ("O Capital", ["economia", "politica"]),
+            ("A princesa e o sapo", ["fantasia", "literatura"]),
+            ("Matematica D", ["matematica", "algebra"]),
             ("O Auto da Compadecida", ["literatura", "teatro"])]
 
 teste :: BancodeDados
 teste = [(("Paulo", "A Mente Nova do Rei"), (20261001, 20261025)),
          (("Ana", "O Segredo de Luiza"), (20261001, 20261010)),
+         (("Ana", "Matematica D"), (20261001, 20261010)),
          (("Paulo", "O Pequeno Principe"), (20261005, 20261019)),
          (("Mauro", "O Capital"), (20261002, 20261015)),
-         (("Francisco", "O Auto da Compadecida"), (20261010, 20261030))]
+         (("Francisco", "O Auto da Compadecida"), (20261010, 20261030)),
+         (("Paulo", "A princesa e o sapo"), (20261005, 20261019))]
+
 
 quantidadeLivros :: BancodeDados -> Pessoa -> Int
 quantidadeLivros banco pessoa =
@@ -39,6 +47,7 @@ existeLivro acervo livro =
             then True
             else existeLivro (tail acervo) livro
 
+
 emprestar :: BancodeDados -> Pessoa -> Livro -> Data -> Data -> BancodeDados
 emprestar banco pessoa livro retirada prazo =
     if quantidadeLivros banco pessoa >= limiteLivros
@@ -48,6 +57,7 @@ emprestar banco pessoa livro retirada prazo =
                 then banco ++ [((pessoa, livro), (retirada, prazo))]
                 else banco
             else banco
+
 
 temPalavra :: [PalavraChave] -> PalavraChave -> Bool
 temPalavra palavras palavra =
@@ -64,6 +74,7 @@ livrosPorPalavra acervo palavra =
         else if temPalavra (snd (head acervo)) palavra
             then [fst (head acervo)] ++ livrosPorPalavra (tail acervo) palavra
             else livrosPorPalavra (tail acervo) palavra
+
 
 emprestimosVencidos :: BancodeDados -> Data -> BancodeDados
 emprestimosVencidos banco referencia =
