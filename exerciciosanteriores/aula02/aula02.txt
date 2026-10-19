@@ -1,0 +1,7 @@
+não é para usar let é para usar uma função que retorna o valor
+
+é para usar funções que retornem valores
+
+não crie váriáveis
+
+na primeira prova nem pode usar $ vish 
