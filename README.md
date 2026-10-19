@@ -14,7 +14,7 @@ livros banco pessoa =
             else livros (tail banco) pessoa
 
 
-Questao 2 
+Questao 2 IGUAL A QUESTAO 1
 pessoas :: BancodeDados -> Livro -> [Pessoa] -- Funcao que recebe banco de dados e pessoa e retorna uma lista
 pessoas banco livro =
     if null banco -- verificar se a lista esta vazia se sim retorna vazio
@@ -25,6 +25,16 @@ pessoas banco livro =
             -- se for diferente retorna chama pessoas com o restante dos elementos da lista passando livro como argumento  
             else pessoas (tail banco) livro
 
+Questao 3
+
+emprestado :: BancodeDados -> Livro -> Bool FUNCAO emprestado que recebe um banco de dados e um livro e retorna um booleano
+emprestado banco livro =
+    if null banco // se o banco for vazio retorna falso condicao de parada
+        then False
+        else if snd (head banco) == livro -- Verifica se o segundo elemento da cabeça da lista de tuplas é igual ao livro procurado
+            then True
+            else emprestado (tail banco) livro 
+            -- se nao for chama emprestado recursivamente 
 
 Glossário e Resumo 
 

@@ -10,7 +10,7 @@ teste = [("Paulo", "A Mente Nova do Rei"),
          ("Mauro", "O Capital"),
          ("Francisco", "O Auto da Compadecida"),
          ("Paulo", "O Segredo de Luiza")]
-
+-- Q1
 livros :: BancodeDados -> Pessoa -> [Livro] 
 livros banco pessoa =
     if null banco
@@ -18,18 +18,16 @@ livros banco pessoa =
         else if fst (head banco) == pessoa --   
             then [snd (head banco)] ++ livros (tail banco) pessoa
             else livros (tail banco) pessoa
-
-pessoas :: BancodeDados -> Livro -> [Pessoa] -- Funcao que recebe banco de dados e pessoa e retorna uma lista
+-- Q2
+pessoas :: BancodeDados -> Livro -> [Pessoa] 
 pessoas banco livro =
-    if null banco -- verificar se a lista esta vazia se sim retorna vazio
+    if null banco
         then []
-        else if snd (head banco) == livro -- verificar o segundo elemento da tupla da cabeça da lista 
-            -- se for igual retorna o primeiro elemento da tupla e chama pessoas com o restante dos elementos da lista passando livro como argumento
+        else if snd (head banco) == livro
             then [fst (head banco)] ++ pessoas (tail banco) livro
-            -- se for diferente retorna chama pessoas com o restante dos elementos da lista passando livro como argumento  
             else pessoas (tail banco) livro
 
--- Questao 3: retorna True se o livro estiver na base de emprestimos.
+-- Q3
 emprestado :: BancodeDados -> Livro -> Bool
 emprestado banco livro =
     if null banco
@@ -38,11 +36,21 @@ emprestado banco livro =
             then True
             else emprestado (tail banco) livro
 
+-- Q4
+quantidadeLivros :: BancodeDados -> Pessoa -> Int
+quantidadeLivros banco pessoa =
+    if null banco
+        then 0
+        else if fst (head banco) == pessoa
+            then 1 + quantidadeLivros (tail banco) pessoa
+            else quantidadeLivros (tail banco) pessoa
+
 main :: IO ()
 main = do
     putStrLn "1 - Consultar livros por pessoa"
     putStrLn "2 - Consultar pessoas por livro"
     putStrLn "3 - Verificar se um livro esta emprestado"
+    putStrLn "4 - Consultar quantidade de livros por pessoa"
     putStrLn "0 - Sair"
     opcao <- getLine
 
@@ -68,7 +76,13 @@ main = do
                             if emprestado teste livro
                                 then putStrLn "O livro esta emprestado."
                                 else putStrLn "O livro nao esta emprestado."
-                        else putStrLn "Opcao invalida."
+                        else if opcao == "4"
+                            then do
+                                putStrLn "Digite o nome da pessoa:"
+                                pessoa <- getLine
+                                putStrLn "Quantidade de livros emprestados:"
+                                print (quantidadeLivros teste pessoa)
+                            else putStrLn "Opcao invalida."
 
             putStrLn "Deseja continuar? (S/N)"
             resposta <- getLine

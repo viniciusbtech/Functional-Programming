@@ -39,10 +39,21 @@ def emprestado(banco, livro):
             return emprestado(banco[1:], livro)
 
 
+def quantidadeLivros(banco, pessoa):
+    if banco == []:
+        return 0
+    else:
+        if banco[0][0] == pessoa:
+            return 1 + quantidadeLivros(banco[1:], pessoa)
+        else:
+            return quantidadeLivros(banco[1:], pessoa)
+
+
 def main():
     print("1 - Consultar livros por pessoa")
     print("2 - Consultar pessoas por livro")
     print("3 - Verificar se um livro esta emprestado")
+    print("4 - Consultar quantidade de livros por pessoa")
     print("0 - Sair")
     opcao = input()
 
@@ -63,6 +74,10 @@ def main():
                 print("O livro esta emprestado.")
             else:
                 print("O livro nao esta emprestado.")
+        elif opcao == "4":
+            pessoa = input("Digite o nome da pessoa:\n")
+            print("Quantidade de livros emprestados:")
+            print(quantidadeLivros(teste, pessoa))
         else:
             print("Opcao invalida.")
 

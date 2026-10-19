@@ -1,10 +1,11 @@
-# Consultas de empréstimos — questões 1 a 3
+# Consultas de empréstimos — questões 1 a 4
 
-Os arquivos `Q1-Q3.hs` e `questao1.py` contêm as três consultas:
+Os arquivos `Q1-Q3.hs` e `questao1.py` contêm as quatro consultas:
 
 - `livros`: recebe a base e uma pessoa e retorna seus livros emprestados.
 - `pessoas`: recebe a base e um livro e retorna as pessoas que o tomaram emprestado.
 - `emprestado`: recebe a base e um livro e retorna `True` se encontrar um empréstimo desse título, ou `False` caso contrário.
+- `quantidadeLivros`: recebe a base e uma pessoa e retorna a quantidade de livros que ela tomou emprestado, ou `0` quando não há empréstimos.
 
 As funções `livros` e `pessoas` percorrem a base por recursão, preservam a ordem dos empréstimos
 e retornam `[]` quando não há correspondências. Nomes e títulos devem ser
@@ -16,6 +17,7 @@ digitados como aparecem na base, respeitando maiúsculas e minúsculas.
 1 - Consultar livros por pessoa
 2 - Consultar pessoas por livro
 3 - Verificar se um livro esta emprestado
+4 - Consultar quantidade de livros por pessoa
 0 - Sair
 ```
 
@@ -50,3 +52,10 @@ que exista no acervo, pois a base registra somente empréstimos.
 
 A função `emprestado` usa o mesmo padrão recursivo: lista vazia retorna
 `False`; título encontrado retorna `True`; caso contrário, consulta `tail banco`.
+
+Na opção `4`, consultar `Paulo` retorna `3`, consultar `Ana` retorna `1`
+e consultar uma pessoa ausente da base retorna `0`.
+A função `quantidadeLivros` retorna `0` para a lista vazia. Para cada
+empréstimo da pessoa procurada, soma `1` ao resultado da chamada recursiva;
+nos demais casos, apenas consulta o restante da base. Essa soma recursiva
+segue a ideia de `exerciciosanteriores/aula04/ler_somar_n.hs`.
