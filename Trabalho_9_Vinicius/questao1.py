@@ -4,8 +4,8 @@ teste = [("Paulo", "A Mente Nova do Rei",),
          ("Ana", "O Segredo de Luiza"),
          ("Paulo", "O Pequeno Principe"),
          ("Mauro", "O Capital"),
-         ("Francisco", "O Auto da Compadecida"),
-         ("Paulo", "O Segredo de Luiza")]
+         ("Francisco", "O Auto da Compadecida")
+         ]
 
 
 def livros(banco, pessoa):
@@ -49,43 +49,80 @@ def quantidadeLivros(banco, pessoa):
             return quantidadeLivros(banco[1:], pessoa)
 
 
-def main():
+def emprestar(banco, pessoa, livro):
+    return banco + [(pessoa, livro)]
+
+
+def devolver(banco, pessoa, livro):
+    if banco == []:
+        return []
+    else:
+        if banco[0] == (pessoa, livro):
+            return banco[1:]
+        else:
+            return [banco[0]] + devolver(banco[1:], pessoa, livro)
+
+
+def continuar(banco):
+    resposta = input("Deseja continuar? (S/N)\n")
+    if resposta == "s" or resposta == "S":
+        menu(banco)
+    else:
+        print("Programa encerrado.")
+
+
+def menu(banco):
     print("1 - Consultar livros por pessoa")
     print("2 - Consultar pessoas por livro")
     print("3 - Verificar se um livro esta emprestado")
     print("4 - Consultar quantidade de livros por pessoa")
+    print("5 - Registrar emprestimo")
+    print("6 - Registrar devolucao")
     print("0 - Sair")
     opcao = input()
 
     if opcao == "0":
         print("Programa encerrado.")
+    elif opcao == "5":
+        pessoa = input("Digite o nome da pessoa:\n")
+        livro = input("Digite o titulo do livro:\n")
+        print("Emprestimo registrado.")
+        continuar(emprestar(banco, pessoa, livro))
+    elif opcao == "6":
+        pessoa = input("Digite o nome da pessoa:\n")
+        livro = input("Digite o titulo do livro:\n")
+        if devolver(banco, pessoa, livro) == banco:
+            print("Emprestimo nao encontrado.")
+        else:
+            print("Devolucao registrada.")
+        continuar(devolver(banco, pessoa, livro))
     else:
         if opcao == "1":
             pessoa = input("Digite o nome da pessoa:\n")
             print("Livros emprestados:")
-            print(livros(teste, pessoa))
+            print(livros(banco, pessoa))
         elif opcao == "2":
             livro = input("Digite o titulo do livro:\n")
             print("Pessoas que tomaram o livro emprestado:")
-            print(pessoas(teste, livro))
+            print(pessoas(banco, livro))
         elif opcao == "3":
             livro = input("Digite o titulo do livro:\n")
-            if emprestado(teste, livro):
+            if emprestado(banco, livro):
                 print("O livro esta emprestado.")
             else:
                 print("O livro nao esta emprestado.")
         elif opcao == "4":
             pessoa = input("Digite o nome da pessoa:\n")
             print("Quantidade de livros emprestados:")
-            print(quantidadeLivros(teste, pessoa))
+            print(quantidadeLivros(banco, pessoa))
         else:
             print("Opcao invalida.")
 
-        resposta = input("Deseja continuar? (S/N)\n")
-        if resposta == "s" or resposta == "S":
-            main()
-        else:
-            print("Programa encerrado.")
+        continuar(banco)
+
+
+def main():
+    menu(teste)
 
 
 if __name__ == "__main__":
