@@ -1,8 +1,6 @@
--- Biblioteca estendida: limite, palavras-chave e datas.
 type Pessoa = String
 type Livro = String
 type PalavraChave = String
--- Datas validas no formato AAAAMMDD, por exemplo: 20261019.
 type Data = Int
 type Emprestimo = ((Pessoa, Livro), (Data, Data))
 type BancodeDados = [Emprestimo]
@@ -18,7 +16,6 @@ catalogo = [("A Mente Nova do Rei", ["ciencia", "mente"]),
             ("O Capital", ["economia", "politica"]),
             ("O Auto da Compadecida", ["literatura", "teatro"])]
 
--- Cada registro: ((pessoa, livro), (data do emprestimo, data limite)).
 teste :: BancodeDados
 teste = [(("Paulo", "A Mente Nova do Rei"), (20261001, 20261025)),
          (("Ana", "O Segredo de Luiza"), (20261001, 20261010)),
@@ -26,7 +23,6 @@ teste = [(("Paulo", "A Mente Nova do Rei"), (20261001, 20261025)),
          (("Mauro", "O Capital"), (20261002, 20261015)),
          (("Francisco", "O Auto da Compadecida"), (20261010, 20261030))]
 
--- Auxiliar da Q7: contar os emprestimos da pessoa.
 quantidadeLivros :: BancodeDados -> Pessoa -> Int
 quantidadeLivros banco pessoa =
     if null banco
@@ -43,7 +39,6 @@ existeLivro acervo livro =
             then True
             else existeLivro (tail acervo) livro
 
--- Q7: impedir novos emprestimos quando o limite for atingido.
 emprestar :: BancodeDados -> Pessoa -> Livro -> Data -> Data -> BancodeDados
 emprestar banco pessoa livro retirada prazo =
     if quantidadeLivros banco pessoa >= limiteLivros
@@ -54,7 +49,6 @@ emprestar banco pessoa livro retirada prazo =
                 else banco
             else banco
 
--- Q8: procurar a palavra na lista associada a cada titulo.
 temPalavra :: [PalavraChave] -> PalavraChave -> Bool
 temPalavra palavras palavra =
     if null palavras
@@ -71,7 +65,6 @@ livrosPorPalavra acervo palavra =
             then [fst (head acervo)] ++ livrosPorPalavra (tail acervo) palavra
             else livrosPorPalavra (tail acervo) palavra
 
--- Q9: o vencimento no proprio dia ainda nao esta atrasado.
 emprestimosVencidos :: BancodeDados -> Data -> BancodeDados
 emprestimosVencidos banco referencia =
     if null banco

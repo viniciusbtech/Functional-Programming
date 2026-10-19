@@ -1,5 +1,3 @@
-# Biblioteca estendida: limite, palavras-chave e datas.
-# Datas validas no formato AAAAMMDD, por exemplo: 20261019.
 limiteLivros = 3
 
 catalogo = [("A Mente Nova do Rei", ["ciencia", "mente"]),
@@ -8,7 +6,6 @@ catalogo = [("A Mente Nova do Rei", ["ciencia", "mente"]),
             ("O Capital", ["economia", "politica"]),
             ("O Auto da Compadecida", ["literatura", "teatro"])]
 
-# Cada registro: ((pessoa, livro), (data do emprestimo, data limite)).
 teste = [(("Paulo", "A Mente Nova do Rei"), (20261001, 20261025)),
          (("Ana", "O Segredo de Luiza"), (20261001, 20261010)),
          (("Paulo", "O Pequeno Principe"), (20261005, 20261019)),
@@ -16,7 +13,6 @@ teste = [(("Paulo", "A Mente Nova do Rei"), (20261001, 20261025)),
          (("Francisco", "O Auto da Compadecida"), (20261010, 20261030))]
 
 
-# Auxiliar da Q7: contar os emprestimos da pessoa.
 def quantidadeLivros(banco, pessoa):
     if banco == []:
         return 0
@@ -37,7 +33,6 @@ def existeLivro(acervo, livro):
             return existeLivro(acervo[1:], livro)
 
 
-# Q7: impedir novos emprestimos quando o limite for atingido.
 def emprestar(banco, pessoa, livro, retirada, prazo):
     if quantidadeLivros(banco, pessoa) >= limiteLivros:
         return banco
@@ -51,7 +46,6 @@ def emprestar(banco, pessoa, livro, retirada, prazo):
             return banco
 
 
-# Q8: procurar a palavra na lista associada a cada titulo.
 def temPalavra(palavras, palavra):
     if palavras == []:
         return False
@@ -72,7 +66,6 @@ def livrosPorPalavra(acervo, palavra):
             return livrosPorPalavra(acervo[1:], palavra)
 
 
-# Q9: o vencimento no proprio dia ainda nao esta atrasado.
 def emprestimosVencidos(banco, referencia):
     if banco == []:
         return []

@@ -1,4 +1,3 @@
-# Consultas: livros por pessoa e pessoas por livro.
 
 teste = [("Paulo", "A Mente Nova do Rei",),
          ("Ana", "O Segredo de Luiza"),
@@ -9,7 +8,6 @@ teste = [("Paulo", "A Mente Nova do Rei",),
 
 
 def livros(banco, pessoa):
-    # Equivalente a null banco: verifica se a lista esta vazia. -[] True 
     if banco == []:
         return []
     else:

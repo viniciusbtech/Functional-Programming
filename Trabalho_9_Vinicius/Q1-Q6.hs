@@ -1,4 +1,3 @@
--- Consultas: livros por pessoa e pessoas por livro.
 type Pessoa = String
 type Livro = String
 type BancodeDados = [(Pessoa, Livro)]   
@@ -9,16 +8,14 @@ teste = [("Paulo", "A Mente Nova do Rei"),
          ("Paulo", "O Pequeno Principe"),
          ("Mauro", "O Capital"),
          ("Francisco", "O Auto da Compadecida")
-         ] -- lista de tuplas 
--- Q1
+         ]
 livros :: BancodeDados -> Pessoa -> [Livro] 
 livros banco pessoa =
     if null banco
         then []
-        else if fst (head banco) == pessoa --   
+        else if fst (head banco) == pessoa
             then [snd (head banco)] ++ livros (tail banco) pessoa
             else livros (tail banco) pessoa
--- Q2
 pessoas :: BancodeDados -> Livro -> [Pessoa] 
 pessoas banco livro =
     if null banco
@@ -27,7 +24,6 @@ pessoas banco livro =
             then [fst (head banco)] ++ pessoas (tail banco) livro
             else pessoas (tail banco) livro
 
--- Q3
 emprestado :: BancodeDados -> Livro -> Bool
 emprestado banco livro =
     if null banco
@@ -36,7 +32,6 @@ emprestado banco livro =
             then True
             else emprestado (tail banco) livro
 
--- Q4
 quantidadeLivros :: BancodeDados -> Pessoa -> Int 
 quantidadeLivros banco pessoa =
     if null banco 
@@ -46,11 +41,9 @@ quantidadeLivros banco pessoa =
             else quantidadeLivros (tail banco) pessoa 
 
 
--- Q5
 emprestar :: BancodeDados -> Pessoa -> Livro -> BancodeDados
 emprestar banco pessoa livro = banco ++ [(pessoa, livro)]
 
--- Q6
 devolver :: BancodeDados -> Pessoa -> Livro -> BancodeDados
 devolver banco pessoa livro =
     if null banco
